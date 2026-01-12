@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OpcSubscriptionService": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
