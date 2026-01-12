@@ -1,4 +1,3 @@
-@@ -1,24 +0,0 @@
 # 1. Stage: Build
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
