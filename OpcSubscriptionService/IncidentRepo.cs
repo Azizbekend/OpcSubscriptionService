@@ -16,7 +16,20 @@ namespace OpcSubscriptionService
             _context = context;
         }
 
-   
+        public async Task CreateHardwareModeEvent(string nodeId, string value)
+        {
+            var node = await _context.Nodes.FirstOrDefaultAsync(x => x.PlcNodeId == nodeId);
+            var hardware = await _context.Hardwares.FirstOrDefaultAsync(x => x.Id == node.HardwareId);
+            var hardwareEvent = new HardwareEvent()
+            {
+                Discription = $"{node.Name} изменён на {value}",
+                HardwareId = hardware.Id,
+                UserId = 0
+
+            };
+            _context.EventsJournal.Add(hardwareEvent);
+            await _context.SaveChangesAsync();
+        }
         public async Task CreateIncidentAsync(string nodeId)
         {
             var node = await _context.Nodes.FirstOrDefaultAsync(x => x.PlcNodeId == nodeId);
@@ -43,6 +56,13 @@ namespace OpcSubscriptionService
                     Status = "New",
                     CreatedAt = DateTime.UtcNow
                 };
+                var hEvent = new HardwareEvent
+                {
+                    Discription = $"{hardware.Name}. {incidentNodes.Name}",
+                    TimeStamp = DateTime.Now.ToUniversalTime(),
+                    HardwareId = hardware.Id                    
+                };
+                _context.EventsJournal.Add(hEvent);
                 _context.Incidents.Add(newIncident);
                 await _context.SaveChangesAsync();
             }

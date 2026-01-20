@@ -20,7 +20,7 @@ namespace OpcSubscriptionService
         public DbSet<Hardware> Hardwares { get; set; }
         public DbSet<ControlBlock> ControlBlocks { get; set; }
         public DbSet<StaticObjectInfo> StaticObjectInfos { get; set; }
-
+        public DbSet<HardwareEvent> EventsJournal { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

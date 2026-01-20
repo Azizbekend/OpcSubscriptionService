@@ -50,6 +50,10 @@ internal class Program
 
                 _ = incidentRepo.CreateIncidentAsync(nodeId);
             }
+            if (nodeId.EndsWith("hMode"))
+            {
+                _ = incidentRepo.CreateHardwareModeEvent(nodeId, value.ToString());
+            }
             appDbContext.NodesIndicates.Add(new NodeIndicates
             {
                 Indicates = value.ToString(),
