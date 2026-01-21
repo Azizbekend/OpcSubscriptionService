@@ -27,8 +27,11 @@ namespace OpcSubscriptionService
                 UserId = 0
 
             };
-            _context.EventsJournal.Add(hardwareEvent);
-            await _context.SaveChangesAsync();
+            var check = await _context.EventsJournal.Where(x => x.HardwareId == hardware.Id && x.Discription == hardwareEvent.Discription).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            if(check == null)
+            {   _context.EventsJournal.Add(hardwareEvent);
+                await _context.SaveChangesAsync();
+            }
         }
         public async Task CreateIncidentAsync(string nodeId)
         {
